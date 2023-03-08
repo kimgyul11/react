@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 
-export default function Counter({ total, onClick }) {
-  const [count, setCount] = useState(0);
+export default function Counter({ onClick, totalCount }) {
+  const [oneCounter, setOneCounter] = useState(0);
+  const oneClickHandler = () => {
+    setOneCounter((prev) => prev + 1);
+    onClick();
+  };
   return (
-    <div className="counter">
-      <p className="number">
-        {count} <span className="total">/{total}</span>
-      </p>
-      <button
-        className="button"
-        onClick={() => {
-          setCount((prev) => prev + 1);
-          onClick();
-        }}
-      >
-        Add +
-      </button>
+    <div>
+      <span>
+        {oneCounter}/{totalCount}
+      </span>
+      <button onClick={oneClickHandler}>카운트업!</button>
     </div>
   );
 }

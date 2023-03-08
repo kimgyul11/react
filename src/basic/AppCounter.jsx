@@ -3,20 +3,16 @@ import "./App.css";
 import Counter from "./components/Counter";
 
 export default function AppCounter() {
-  //전체 카운트를 위한 state
   const [totalCount, setTotalCount] = useState(0);
-  const handleClick = () => {
+  const onClickHandler = () => {
     setTotalCount((prev) => prev + 1);
   };
   return (
-    <div className="container">
-      <div className="banner">
-        TotalCount : {totalCount} {totalCount > 10 ? "🔥" : "🤔"}
-      </div>
-      <div className="counters">
-        <Counter total={totalCount} onClick={handleClick} />
-        <Counter total={totalCount} onClick={handleClick} />
-      </div>
+    <div>
+      <header>{totalCount}</header>
+      <button onClick={onClickHandler}>토탈카운트 증가합니다!</button>
+      <Counter onClick={onClickHandler} totalCount={totalCount} />
+      <Counter onClick={onClickHandler} totalCount={totalCount} />
     </div>
   );
 }

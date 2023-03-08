@@ -11,12 +11,13 @@
   padding: 1rem;
   border-radius: 1rem;
   border: 2px solid royalblue;
+  width: 150px;
 }
 .counter:hover {
   background-color: yellowgreen;
 }
 .number {
-  font-size: 7rem;
+  font-size: 4rem;
 }
 .banner {
   width: 50%;
@@ -27,8 +28,8 @@
   font-size: 1.5rem;
 }
 .counters {
-  width: 40%;
   margin: auto;
+  display: flex;
 }
 .total {
   font-size: 1rem;
