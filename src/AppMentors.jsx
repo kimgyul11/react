@@ -1,33 +1,48 @@
 import React, { useState } from "react";
 
 export default function AppMentor() {
+  const userObj = {
+    id: "rlarbf",
+    nickname: "김귤",
+    post: [
+      {
+        title: "불변성이란..",
+        data: "2023.3.15",
+      },
+    ],
+  };
+  const initialPerson = {
+    name: "엘리",
+    title: "개발자",
+    mentors: [
+      {
+        name: "밥",
+        title: "시니어 개발자.",
+      },
+      {
+        name: "제임스",
+        title: "시니어 개발자.",
+      },
+    ],
+  };
   const [person, setPerson] = useState(initialPerson);
-  const handleUpdate = () => {
-    const prev = prompt(`누구의 이름을 바꾸고 싶은가요?`);
-    const current = prompt(`이름을 무엇으로 바꾸고 싶은가요?`);
+
+  const handleChange = () => {
+    const prevName = prompt("누구의 이름을 바꿀껀가요?");
+    const checkName = person.mentors.some((mentor) => mentor.name === prevName);
+    if (!checkName) {
+      alert("해당 아이디가 없습니다.");
+      return;
+    }
+    const currentName = prompt("변경할 이름을 적으세요");
     setPerson((person) => ({
       ...person,
       mentors: person.mentors.map((mentor) => {
-        if (mentor.name === prev) {
-          return { ...mentor, name: current };
+        if (mentor.name === prevName) {
+          return { ...mentor, name: currentName };
         }
         return mentor;
       }),
-    }));
-  };
-  const handleAdd = () => {
-    const name = prompt(`멘토의 이름은?`);
-    const title = prompt(`멘토의 직함은?`);
-    setPerson((person) => ({
-      ...person,
-      mentors: [{ name, title }, ...person.mentors],
-    }));
-  };
-  const handleDelete = () => {
-    const name = prompt(`누구를 삭제하고 싶은가요?`);
-    setPerson((person) => ({
-      ...person,
-      mentors: person.mentors.filter((m) => m.name !== name),
     }));
   };
   return (
@@ -43,9 +58,9 @@ export default function AppMentor() {
           </li>
         ))}
       </ul>
-      <button onClick={handleUpdate}>멘토의 이름을 바꾸기</button>
-      <button onClick={handleAdd}>멘토 추가하기</button>
-      <button onClick={handleDelete}>멘토 삭제하기</button>
+      <button onClick={handleChange}>멘토의 이름을 바꾸기</button>
+      <button>멘토 추가하기</button>
+      <button>멘토 삭제하기</button>
     </div>
   );
 }

@@ -6,6 +6,7 @@ export default function Counter({ onClick, totalCount }) {
     setOneCounter((prev) => prev + 1);
     onClick();
   };
+
   return (
     <div>
       <span>
