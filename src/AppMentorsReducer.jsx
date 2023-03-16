@@ -1,47 +1,37 @@
 import React, { useReducer, useState } from "react";
 import personReducer from "./reducer/person-reducerr";
-const initialPerson = {
-  name: "엘리",
-  title: "개발자",
-  mentors: [
-    {
-      name: "밥",
-      title: "시니어개발자",
-    },
-    {
-      name: "제임스",
-      title: "시니어개발자",
-    },
-  ],
-};
-export default function AppMentor() {
-  // const [person, setPerson] = useState(initialPerson);
-  const [person, dispach] = useReducer(personReducer, initialPerson);
 
-  const handleUpdate = () => {
-    const prev = prompt(`누구의 이름을 바꾸고 싶은가요?`);
-    const checkName = person.mentors.some((mentor) => mentor.name === prev);
+export default function AppMentorReducer() {
+  const [person, dispatch] = useReducer(personReducer, initialPerson);
+  //dispatch를 사용해서 액션을 수행
+  const handleChange = () => {
+    const prevName = prompt("누구의 이름을 변경할건가요?");
+    const checkName = person.mentors.some((mentor) => {
+      return (mentor.name = prevName);
+    });
     if (!checkName) {
-      alert("이름이 없다.");
-      return;
+      return alert("해당 아이디가 존재하지 않습니다.");
     }
-    const current = prompt(`뭘로 바꿀꺼냐`);
-    dispach({ type: "updated", prev, current });
+    const currentName = prompt("어떤이름으로 바꿀껀가요?");
+    dispatch({ type: "updated", prevName, currentName });
   };
   const handleAdd = () => {
-    const name = prompt("추가할 이름");
-    const checkName = person.mentors.some((mentor) => mentor.name === name);
+    const addName = prompt("이름");
+    const addTitle = prompt("타이틀");
+    dispatch({ type: "added", addName, addTitle });
+  };
+
+  const handleDelete = () => {
+    const mentorName = prompt("누구의 이름을 삭제할건가요?");
+    const checkName = person.mentors.some(
+      (mentor) => mentor.name === mentorName
+    );
     if (!checkName) {
-      alert("이름이 없다.");
-      return;
+      return alert("그런이름 없어 돌아가");
     }
-    const title = prompt("변경할 이름");
-    dispach({ type: "added", name, title });
+    dispatch({ type: "deleted", mentorName });
   };
-  const handleDel = () => {
-    const name = prompt("누구를 삭제할거냐?");
-    dispach({ type: "deleted", name });
-  };
+
   return (
     <div>
       <h1>
@@ -55,9 +45,23 @@ export default function AppMentor() {
           </li>
         ))}
       </ul>
-      <button onClick={handleUpdate}>멘토의 이름을 바꾸기</button>
-      <button onClick={handleAdd}>멘토추가하기</button>
-      <button onClick={handleDel}>멘토삭제하기</button>
+      <button onClick={handleChange}>멘토의 이름을 바꾸기</button>
+      <button onClick={handleAdd}>멘토 추가하기</button>
+      <button onClick={handleDelete}>멘토 삭제하기</button>
     </div>
   );
 }
+const initialPerson = {
+  name: "엘리",
+  title: "개발자",
+  mentors: [
+    {
+      name: "밥",
+      title: "시니어 개발자.",
+    },
+    {
+      name: "제임스",
+      title: "시니어 개발자.",
+    },
+  ],
+};
