@@ -9,10 +9,11 @@ import AppMentorsBtn from "./AppMentorsBtn";
 import AppProducts from "./basic/AppProducts";
 import AppCounter from "./basic/AppCounter";
 import AppMentorsReducer from "./AppMentorsReducer";
+import AppUser from "./AppUser";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AppMentorsReducer />
+    <AppUser />
   </React.StrictMode>
 );
 
