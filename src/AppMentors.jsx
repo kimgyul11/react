@@ -83,18 +83,3 @@ export default function AppMentor() {
     </div>
   );
 }
-
-const initialPerson = {
-  name: "엘리",
-  title: "개발자",
-  mentors: [
-    {
-      name: "밥",
-      title: "시니어개발자",
-    },
-    {
-      name: "제임스",
-      title: "시니어개발자",
-    },
-  ],
-};

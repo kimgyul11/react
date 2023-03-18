@@ -1,38 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import { useImmer } from "use-immer";
 
 export default function AppMentor() {
+  const initialPerson = {
+    name: "엘리",
+    title: "개발자",
+    mentors: [
+      {
+        name: "밥",
+        title: "시니어 개발자.",
+      },
+      {
+        name: "제임스",
+        title: "시니어 개발자.",
+      },
+    ],
+  };
   const [person, updatePerson] = useImmer(initialPerson);
-  const handleUpdate = () => {
-    const prev = prompt(`누구의 이름을 바꾸고 싶은가요?`);
-    const current = prompt(`이름을 무엇으로 바꾸고 싶은가요?`);
+
+  const handleChange = () => {
+    const prevName = prompt("누구의 이름을 변경할건가요?");
+    const cuurentName = prompt("변경할 이름을 선택하세요");
     updatePerson((person) => {
-      const mentor = person.metors.find((m) => m.name === prev);
-      mentor.name = current;
+      const mentor = person.mentors.find((m) => m.name === prevName);
+      mentor.name = cuurentName;
     });
   };
   const handleAdd = () => {
-    const name = prompt(`멘토의 이름은?`);
-    const title = prompt(`멘토의 직함은?`);
-    // setPerson((person) => ({
-    //   ...person,
-    //   mentros: [{ name, title }, ...person.mentros],
-    // }));
-    updatePerson((person) => {
-      person.mentors.push({ name, title });
-    });
+    const name = prompt("이름");
+    const title = prompt("타이틀");
+    updatePerson((person) => person.mentors.push({ name, title }));
   };
+
   const handleDelete = () => {
-    const name = prompt(`누구를 삭제하고 싶은가요?`);
+    const mentorName = prompt("누구의 이름을 삭제할건가요?");
+    const checkName = person.mentors.some(
+      (mentor) => mentor.name === mentorName
+    );
+    if (!checkName) {
+      return alert("그런이름 없어 돌아가");
+    }
     updatePerson((person) => {
-      const index = person.mentors.findIndex((m) => m.name === name);
-      person.mentors.splice(index, 1);
+      const index = person.mentors.findIndex((m) => m.name === mentorName);
+      person.mentor.splice(index, 1);
     });
-    // setPerson((person) => ({
-    //   ...person,
-    //   mentors: person.mentors.filter((m) => m.name !== name),
-    // }));
   };
+
   return (
     <div>
       <h1>
@@ -46,24 +59,9 @@ export default function AppMentor() {
           </li>
         ))}
       </ul>
-      <button onClick={handleUpdate}>멘토의 이름을 바꾸기</button>
+      <button onClick={handleChange}>멘토의 이름을 바꾸기</button>
       <button onClick={handleAdd}>멘토 추가하기</button>
       <button onClick={handleDelete}>멘토 삭제하기</button>
     </div>
   );
 }
-
-const initialPerson = {
-  name: "엘리",
-  title: "개발자",
-  mentors: [
-    {
-      name: "밥",
-      title: "시니어개발자",
-    },
-    {
-      name: "제임스",
-      title: "시니어개발자",
-    },
-  ],
-};
