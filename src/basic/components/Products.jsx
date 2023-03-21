@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useProducts from "../../hooks/use-products";
 
 export default function Products() {
-  const [count, setCount] = useState(0);
   const [checked, setChecked] = useState(false);
   const [loading, error, products] = useProducts({ salesOnly: checked });
   const handelChange = () => setChecked((prev) => !prev);
-  if (loading) return <p>loading...</p>;
+
+  if (loading) return <p>Loading</p>;
   if (error) return <p>{error}</p>;
+
   return (
     <>
       <input
@@ -27,7 +28,7 @@ export default function Products() {
           </li>
         ))}
       </ul>
-      <button onClick={() => setCount((prev) => prev + 1)}>{count}</button>
+      <button>버튼</button>
     </>
   );
 }

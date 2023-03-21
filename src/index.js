@@ -11,10 +11,11 @@ import AppCounter from "./basic/AppCounter";
 import AppMentorsReducer from "./AppMentorsReducer";
 import AppMentorsImmer from "./AppMentorsImmer";
 import AppUser from "./AppUser";
+import InputSample from "./InputSample";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AppTheme />
+    <AppProducts />
   </React.StrictMode>
 );
 

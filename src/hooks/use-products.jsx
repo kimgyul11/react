@@ -4,7 +4,6 @@ export default function useProducts({ salesOnly }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [products, setProducts] = useState([]);
-
   useEffect(() => {
     setLoading(true);
     setError(undefined);
@@ -14,10 +13,10 @@ export default function useProducts({ salesOnly }) {
         console.log("데이터를 받아왔습니다!");
         setProducts(data);
       })
-      .catch((e) => setError("에러 발생"))
+      .catch((e) => setError("에러발생했음"))
       .finally(() => setLoading(false));
     return () => {
-      console.log("닫혔습니다.");
+      console.log("깨끗하게 청소합니다.");
     };
   }, [salesOnly]);
 

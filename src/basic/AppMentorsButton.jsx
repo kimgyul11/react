@@ -1,35 +1,26 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
+import React, { memo, useCallback, useMemo, useReducer } from "react";
+import personReducer from "./reducer/person-reducer";
 
-export default function AppMentorsBtn() {
-  const [person, setPerson] = useState(initialPerson);
+export default function AppMentorsButton() {
+  const [person, dispatch] = useReducer(personReducer, initialPerson);
+
   const handleUpdate = useCallback(() => {
     const prev = prompt(`누구의 이름을 바꾸고 싶은가요?`);
     const current = prompt(`이름을 무엇으로 바꾸고 싶은가요?`);
-    setPerson((person) => ({
-      ...person,
-      mentors: person.mentors.map((mentor) => {
-        if (mentor.name === prev) {
-          return { ...mentor, name: current };
-        }
-        return mentor;
-      }),
-    }));
+    dispatch({ type: "updated", prev, current });
   }, []);
+
   const handleAdd = useCallback(() => {
     const name = prompt(`멘토의 이름은?`);
     const title = prompt(`멘토의 직함은?`);
-    setPerson((person) => ({
-      ...person,
-      mentors: [{ name, title }, ...person.mentors],
-    }));
+    dispatch({ type: "added", name, title });
   }, []);
+
   const handleDelete = useCallback(() => {
     const name = prompt(`누구를 삭제하고 싶은가요?`);
-    setPerson((person) => ({
-      ...person,
-      mentors: person.mentors.filter((m) => m.name !== name),
-    }));
+    dispatch({ type: "deleted", name });
   }, []);
+
   return (
     <div>
       <h1>
@@ -50,18 +41,9 @@ export default function AppMentorsBtn() {
   );
 }
 
-//성능다운시키는 반복문
-function calculateSomething() {
-  for (let i = 0; i < 1000; i++) {
-    console.log("야호");
-  }
-  return 10;
-}
-
-//버튼 컴포넌트
-const Button = memo(({ text, onClick }) => {
-  console.log("button", text, "re-rendering");
-  const result = useMemo(() => calculateSomething(), []);
+function Button({ text, onClick }) {
+  console.log("Button", text, "re-rendering 😜");
+  const result = calculateSomething();
   return (
     <button
       onClick={onClick}
@@ -75,9 +57,15 @@ const Button = memo(({ text, onClick }) => {
       {`${text} ${result}`}
     </button>
   );
-});
+}
 
-//기본값
+function calculateSomething() {
+  for (let i = 0; i < 10000; i++) {
+    console.log("😆");
+  }
+  return 10;
+}
+
 const initialPerson = {
   name: "엘리",
   title: "개발자",
